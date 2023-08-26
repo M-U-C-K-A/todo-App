@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <h2>todo list</h2>
+            <div id="list-parameter">
+                <div class="row">
+                    <input type="text" id="input-box" placeholder="add your text">
+                    <select id="collection-select">
+                    </select>
+                    <button>Add</button>
+                </div>
+                <div class="row">
+                    <input type="text" id="collection-box" placeholder="add / remove collection">
+                    <button id="add-collection">Add Collection</button>
+                    <button id="delete-collection">Delete Collection</button>
+                </div>
+            </div>
+            <ul id="list-container">
+
+            </ul>
+        </div>
+    </div>
+
+    <script defer>
+        console.log('todo app')
+        const inputBox = document.getElementById("input-box")
+        const collectionSelect = document.getElementById("collection-select")
+        const collectionBox = document.getElementById("collection-box")
+        const listContainer = document.getElementById("list-container")
+        const addCollectionBtn = document.getElementById("add-collection")
+        const deleteCollectionBtn = document.getElementById("delete-collection")
+
+        function addDefaultCollection() {
+            let collection = document.createElement("fieldset")
+            collection.className = "collection"
+            let legend = document.createElement("legend")
+            legend.textContent = "default"; // Nom de la collection par défaut
+            let ul = document.createElement("ul")
+            ul.className = "collection-tasks"
+            ul.setAttribute("data-collection", "default");
+            collection.appendChild(legend)
+            collection.appendChild(ul)
+            listContainer.appendChild(collection)
+
+            const option = document.createElement("option");
+            option.textContent = "default"; // Option dans le menu déroulant
+            collectionSelect.appendChild(option);
+        }
+        function addTask() {
+            if (inputBox.value === '') {
+                alert("you must write something!")
+                return;
+            }
+            const selectedCollection = collectionSelect.value;
+            if (selectedCollection === '') {
+                alert("you must select a collection!")
+                return;
+            }
+            let li = document.createElement("li")
+            let span = document.createElement("span")
+            li.textContent = inputBox.value;
+            const collectionUl = listContainer.querySelector(`[data-collection="${selectedCollection}"]`);
+            collectionUl.appendChild(li);
+            span.innerHTML = "\u00d7"
+            li.appendChild(span)
+            inputBox.value = ""
+            saveData()
+        }
+
+        function addCollection() {
+            if (collectionBox.value === '') {
+                alert("you must provide a collection name!")
+                return;
+            }
+            let collection = document.createElement("fieldset")
+            collection.className = "collection"
+            let legend = document.createElement("legend")
+            legend.textContent = collectionBox.value;
+            let ul = document.createElement("ul")
+            ul.className = "collection-tasks"
+            ul.setAttribute("data-collection", collectionBox.value);
+            collection.appendChild(legend)
+            collection.appendChild(ul)
+            listContainer.appendChild(collection)
+
+            const option = document.createElement("option");
+            option.textContent = collectionBox.value;
+            collectionSelect.appendChild(option);
+
+            collectionBox.value = ""
+            saveData()
+        }
+
+        function deleteCollection() {
+            const selectedCollection = collectionSelect.value;
+            if (selectedCollection === 'default') {
+                alert("you cannot delete the default collection!")
+                return;
+            }
+            const collectionToRemove = listContainer.querySelector(`[data-collection="${selectedCollection}"]`);
+            if (collectionToRemove) {
+                listContainer.removeChild(collectionToRemove);
+                // Remove the collection option from the dropdown
+                const optionToRemove = collectionSelect.querySelector(`option[value="${selectedCollection}"]`);
+                if (optionToRemove) {
+                    collectionSelect.removeChild(optionToRemove);
+                }
+            }
+            saveData();
+        }
+
+        addCollectionBtn.addEventListener("click", addCollection);
+        deleteCollectionBtn.addEventListener("click", deleteCollection);
+
+        document.querySelector("button").addEventListener("click", addTask)
+
+        listContainer.addEventListener("click", function (e) {
+            if (e.target.tagName === "LI") {
+                e.target.classList.toggle("checked")
+                saveData()
+            } else if (e.target.tagName === "SPAN") {
+                e.target.parentElement.remove()
+                saveData()
+            }
+        }, false)
+
+        function saveData() {
+            localStorage.setItem("data", listContainer.innerHTML)
+        }
+
+        function showTask() {
+            listContainer.innerHTML = localStorage.getItem("data")
+        }
+        //showTask()
+
+
+
+
+
+
+
+
+        addDefaultCollection();
+    </script>
+</body>
+
+</html>

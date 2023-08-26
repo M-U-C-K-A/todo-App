@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+:root {
+    --background: black;
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--background);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+}
+.container {
+    padding: 10px;
+    border-radius: 10px;
+    border: solid 1px #fff;
+    box-shadow: 1px 1px 3px rgba(255, 255, 255, 0.645);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    margin: 15px auto;
+}
+
+fieldset {
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(255, 255, 255, 0.645);
+}
+
+button {
+    background-color: rgb(187, 244, 74);
+    border: solid 2px rgb(154, 200, 61);
+    padding: 5px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+button:hover {
+    background-color: rgb(195, 233, 119);
+    border: solid 2px rgb(161, 195, 94);
+}
+#delete-collection {
+    background-color: rgb(190, 41, 11);
+    border: solid 2px rgb(148, 32, 9);
+    color: white;
+}
+#delete-collection:hover {
+    background-color: rgb(189, 64, 39);
+    border: solid 2px rgb(141, 48, 30);
+}
+
+select {
+    padding: 5px;
+    color: rgba(107, 114, 128, 1);
+    background-color: transparent;
+    border: 2px solid white;
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  option {
+    color: rgba(107, 114, 128, 1);
+}
+
+input[type="text"] {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+}
+.collection-tasks {
+    list-style-type: square;
+    color: #fff;
+}
+li {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    border-radius: 5px;
+    margin: 2px auto;
+    width: fit-content;
+}
+li:hover {
+    opacity: .8;
+}
+ul {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+
+}
